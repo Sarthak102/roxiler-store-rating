@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
-  "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-  "build": "tsc -p .",
-  "start": "node dist/server.js",
-  "migrate": "knex migrate:latest --knexfile knexfile.js",
-  "postinstall": "npm run migrate"
-},
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc -p .",
+    "start": "node dist/server.js",
+    "migrate": "knex migrate:latest --knexfile knexfile.js",
+    "postinstall": "npm run migrate"
+  },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/body-parser": "^1.19.6",
