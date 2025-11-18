@@ -1,3 +1,4 @@
+require("ts-node/register"); // <-- enable TS support for migrations
 require("dotenv").config();
 
 const common = {
@@ -5,6 +6,7 @@ const common = {
   connection: process.env.DATABASE_URL,
   migrations: {
     directory: "./src/db/migrations",
+    extension: "ts", // <-- tell knex migrations are .ts
   },
 };
 
