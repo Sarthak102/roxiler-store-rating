@@ -2,13 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "dist/server.js",
- "scripts": {
-  "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-  "build": "tsc -p .",
-  "start": "node dist/server.js",
-  "migrate": "knex migrate:latest --knexfile knexfile.js",
-  "postinstall": "npm run migrate"
-},
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc -p .",
+    "start": "node dist/server.js",
+    "migrate": "knex migrate:latest --knexfile src/knexfile.ts"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
@@ -20,7 +19,6 @@
     "knex": "^2.5.1",
     "pg": "^8.11.3",
     "uuid": "^13.0.0",
-
     "@types/bcrypt": "^5.0.2",
     "@types/body-parser": "^1.19.6",
     "@types/cors": "^2.8.19",
