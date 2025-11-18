@@ -1,0 +1,17 @@
+// frontend/src/components/ui/card.tsx
+import React from "react";
+import clsx from "clsx";
+
+export const Card: React.FC<
+  React.PropsWithChildren<{ className?: string }>
+> = ({ children, className }) => {
+  return (
+    <div
+      className={clsx("bg-white border rounded-lg p-4 shadow-sm", className)}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default Card;

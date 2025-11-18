@@ -1,0 +1,17 @@
+import express from "express";
+import { createUser } from "../controllers";
+import { authenticate, authorizeRole } from "../middleware/auth";
+import { validateAdminCreate } from "../validators/adminValidators";
+
+const router = express.Router();
+
+// Only admins can call this
+router.post(
+  "/users",
+  authenticate,
+  authorizeRole("admin"),
+  validateAdminCreate,
+  createUser
+);
+
+export default router;
