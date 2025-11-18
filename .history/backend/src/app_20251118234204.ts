@@ -1,3 +1,4 @@
+import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import "express-async-errors";
@@ -19,8 +20,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/stores", storeRoutes);
 app.use("/api/stores", ratingRoutes);
 
-app.get("/health", (_req: Request, res: Response) => {
-  res.json({ ok: true });
-});
+app.get("/health", (_, res) => res.json({ status: "ok" }));
 
 export default app;

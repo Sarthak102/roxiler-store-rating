@@ -1,4 +1,5 @@
-import express, { Request, Response } from "express";
+import express from "express";
+
 import db from "../db";
 
 import {
@@ -20,7 +21,7 @@ router.get(
   "/store-owners",
   authenticate,
   authorizeRole("admin"),
-  async (req: Request, res: Response) => {
+  async (req: any, res) => {
     try {
       const owners = await db("users")
         .select("id", "name", "email")
@@ -47,7 +48,7 @@ router.post(
   "/stores",
   authenticate,
   authorizeRole("admin"),
-  async (req: Request, res: Response) => {
+  async (req: any, res) => {
     try {
       const { name, email, address, owner_id } = req.body;
 

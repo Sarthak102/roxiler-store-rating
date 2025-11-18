@@ -175,3 +175,6 @@ router.get(
 );
 
 export default router;
+cd backend
+npm install        # if not already done after the @types fixes
+npm run build

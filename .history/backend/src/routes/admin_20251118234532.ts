@@ -47,7 +47,7 @@ router.post(
   "/stores",
   authenticate,
   authorizeRole("admin"),
-  async (req: Request, res: Response) => {
+  async (req: any, res) => {
     try {
       const { name, email, address, owner_id } = req.body;
 

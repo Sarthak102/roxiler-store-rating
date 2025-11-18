@@ -1,3 +1,4 @@
+import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import "express-async-errors";
@@ -7,7 +8,7 @@ import authRoutes from "./routes/auth";
 import storeRoutes from "./routes/stores";
 import ratingRoutes from "./routes/ratings";
 import adminRoutes from "./routes/admin";
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 
 const app = express();
 app.use(cors());

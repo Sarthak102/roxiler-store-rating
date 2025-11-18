@@ -1,4 +1,3 @@
-// backend/src/routes/storeOwner.ts
 import express, { Request, Response } from "express";
 import db from "../db";
 import { authenticate } from "../middleware/auth";
@@ -8,15 +7,15 @@ const router = express.Router();
 
 /**
  * GET /api/store-owner/store
- * Single store summary (for dashboard).
+ * Single store summary (for dashboard) – keeps previous behaviour.
  */
 router.get(
   "/store",
   authenticate,
   authorizeRole("store_owner"),
-  async (req: Request, res: Response) => {
+  async (req: Request & { user: any , res: Response) => {
     try {
-      const ownerId = (req as any).user.userId;
+      const ownerId = req.user.userId;
 
       const store = await db("stores")
         .leftJoin("ratings", "stores.id", "ratings.store_id")
@@ -52,9 +51,9 @@ router.get(
   "/ratings",
   authenticate,
   authorizeRole("store_owner"),
-  async (req: Request, res: Response) => {
+  async (req: any, res) => {
     try {
-      const ownerId = (req as any).user.userId;
+      const ownerId = req.user.userId;
 
       const store = await db("stores")
         .where("owner_id", ownerId)
@@ -96,16 +95,16 @@ router.get(
 );
 
 /**
- * GET /api/store-owner/stores
+ * NEW: GET /api/store-owner/stores
  * List ALL stores owned by this store_owner, with avg + count.
  */
 router.get(
   "/stores",
   authenticate,
   authorizeRole("store_owner"),
-  async (req: Request, res: Response) => {
+  async (req: any, res) => {
     try {
-      const ownerId = (req as any).user.userId;
+      const ownerId = req.user.userId;
 
       const stores = await db("stores")
         .leftJoin("ratings", "stores.id", "ratings.store_id")
@@ -131,16 +130,16 @@ router.get(
 );
 
 /**
- * GET /api/store-owner/stores/:id/ratings
+ * NEW: GET /api/store-owner/stores/:id/ratings
  * Ratings for a specific store (ensuring it belongs to this owner).
  */
 router.get(
   "/stores/:id/ratings",
   authenticate,
   authorizeRole("store_owner"),
-  async (req: Request, res: Response) => {
+  async (req: any, res) => {
     try {
-      const ownerId = (req as any).user.userId;
+      const ownerId = req.user.userId;
       const storeId = req.params.id;
 
       const store = await db("stores")
