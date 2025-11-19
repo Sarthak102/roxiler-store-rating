@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, type ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { getUsers, getUser } from "../../services/adminService";
 import type { User } from "../../services/adminService";
@@ -16,10 +16,10 @@ export default function AdminUsers() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const toast = useToast();
+  const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const load = async () => {
     setLoading(true);
     setError(null);
     try {
@@ -31,21 +31,21 @@ export default function AdminUsers() {
       });
       setUsers(res.data || []);
       setTotal(res.total || 0);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError("Failed to load users");
+      setError(err?.response?.data?.error || "Failed to load users");
     } finally {
       setLoading(false);
     }
-  }, [q, role, page, limit]);
+  };
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    load();
+  }, [page]);
 
-  const handleSearch = () => {
-    // reset to first page; load() will re-run because page changes
+  const handleSearch = async () => {
     setPage(1);
+    await load();
   };
 
   const openDetails = async (id: string) => {
@@ -58,20 +58,16 @@ export default function AdminUsers() {
     }
   };
 
-  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQ(e.target.value);
-  };
-
   return (
     <Layout>
       <div className="max-w-6xl mx-auto p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-semibold">Users</h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex gap-2">
             <Input
               placeholder="Search name or email"
               value={q}
-              onChange={handleQueryChange}
+              onChange={(e: any) => setQ(e.target.value)}
             />
             <select
               value={role}

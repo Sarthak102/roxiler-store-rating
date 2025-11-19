@@ -1,3 +1,4 @@
+
 import React from "react";
 import clsx from "clsx";
 
@@ -23,6 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variants: Record<string, string> = {
+    // NEW DEFAULT STYLE → matches login & signup pages
     default: "bg-gray-900 text-white hover:bg-gray-800",
 
     destructive: "bg-red-600 text-white hover:bg-red-700",

@@ -25,7 +25,7 @@ export default function StoresDashboard() {
   const { user } = useAuth();
 
   useEffect(() => {
-    void loadStores();
+    loadStores();
   }, []);
 
   async function loadStores(search = "") {
@@ -33,8 +33,8 @@ export default function StoresDashboard() {
       setLoading(true);
       const list = await fetchStores({ q: search, limit: 100 });
       setStores(list ?? []);
-    } catch {
-      console.error("Failed to load stores");
+    } catch (err) {
+      console.error("Failed to load stores", err);
       toast.error("Failed to load stores");
       setStores([]);
     } finally {
@@ -65,7 +65,7 @@ export default function StoresDashboard() {
       });
       toast.success("Rating saved");
       await loadStores(q);
-    } catch {
+    } catch (err) {
       toast.error("Failed to submit rating");
       await loadStores(q);
     } finally {

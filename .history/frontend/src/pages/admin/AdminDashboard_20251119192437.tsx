@@ -31,10 +31,9 @@ export default function AdminDashboard() {
       try {
         const res = await getAdminStats();
         setStats(res);
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
-        // we don't assume Axios here, just safe fallback
-        setError("Failed to load stats");
+        setError(err?.response?.data?.error || "Failed to load stats");
       } finally {
         setLoading(false);
       }
@@ -66,12 +65,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {loading && (
-          <div className="text-sm text-muted">Loading statistics...</div>
-        )}
         {error && <div className="text-red-600">{error}</div>}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <Card className="card-lg">
             <div className="text-sm text-muted">Total users</div>
             <div className="text-3xl font-bold">
@@ -115,7 +111,7 @@ export default function AdminDashboard() {
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
                 <Bar dataKey="value" barSize={36}>
-                  {chartData.map((_, idx) => (
+                  {chartData.map((entry, idx) => (
                     <Cell
                       key={`cell-${idx}`}
                       fill={colors[idx % colors.length]}

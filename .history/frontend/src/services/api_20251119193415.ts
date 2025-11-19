@@ -17,9 +17,7 @@ api.interceptors.request.use((config) => {
     if (token && config.headers) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
-  } catch {
-    // Ignore localStorage errors (e.g. in private mode)
-  }
+  } catch {-}
   return config;
 });
 

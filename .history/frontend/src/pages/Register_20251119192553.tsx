@@ -1,8 +1,9 @@
+
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Button from "../components/ui/button";
-import api from "../services/api";
+import api from "../services/api"; 
 import axios from "axios";
 
 type RegisterForm = {
@@ -19,6 +20,7 @@ export default function Register() {
 
   const onSubmit = async (data: RegisterForm) => {
     try {
+      // ✅ this now hits https://roxiler-store-rating-ruki.onrender.com/api/auth/register
       await api.post("/auth/register", {
         name: data.name,
         email: data.email,
@@ -27,6 +29,7 @@ export default function Register() {
         role: "user",
       });
 
+      // login still uses the same api client under the hood
       await login(data.email, data.password);
       navigate("/");
     } catch (err: unknown) {
